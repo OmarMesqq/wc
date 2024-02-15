@@ -92,11 +92,12 @@ if option == "-c" or option == "-l" or option == "-w" or option == "-m" then
         count = countChars(content)
     end
     print(count, filename)
-else
-    local content =io.read("*a")
+else    
+    local f = assert(io.open(filename, "rb"))
+    local content = f:read("*a")
     local count = 0
     local lines = countLines(content)
     local words = countWords(content)
     local bytes = countBytes(content)
-    print(lines, words, bytes)
+    print(lines, words, bytes, filename)
 end
