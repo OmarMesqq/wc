@@ -91,7 +91,7 @@ if option == "-c" or option == "-l" or option == "-w" or option == "-m" then
     elseif option == "-m" then
         count = countChars(content)
     end
-    print(count, filename)
+    print(count .. " " .. filename)
 else    
     local count = 0
     local lines = countLines(content)
