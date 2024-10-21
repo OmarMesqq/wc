@@ -1,10 +1,6 @@
 -- Simulates wc -c flag (counts bytes)
 local function countBytes(fileContent)
-    local count = 0
-    for _ in string.gmatch(fileContent, ".") do
-        count = count + 1
-    end
-    return count
+    return #fileContent
 end
 
 -- Simulates wc -l flag (counts lines)
