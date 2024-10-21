@@ -24,16 +24,16 @@ compare_outputs() {
 }
 
 # Line Count
-compare_outputs "Line" "wc -l test.txt" "lua main.lua -l test.txt"
+compare_outputs "Line" "wc -l test.txt" "lua wc.lua -l test.txt"
 
 # Word Count
-compare_outputs "Word" "wc -w test.txt" "lua main.lua -w test.txt"
+compare_outputs "Word" "wc -w test.txt" "lua wc.lua -w test.txt"
 
 # Byte Count
-compare_outputs "Byte" "wc -c test.txt" "lua main.lua -c test.txt"
+compare_outputs "Byte" "wc -c test.txt" "lua wc.lua -c test.txt"
 
 # Character Count
-compare_outputs "Character" "wc -m test.txt" "lua main.lua -m test.txt"
+compare_outputs "Character" "wc -m test.txt" "lua wc.lua -m test.txt"
 
 # File piping test
-compare_outputs "File pipe" "cat test.txt | wc" "cat test.txt | lua main.lua"
+compare_outputs "File pipe" "cat test.txt | wc" "cat test.txt | lua wc.lua"
