@@ -36,6 +36,16 @@ local option = arg[1]
 local filename = arg[2]
 local fileContent = ""
 
+local function countOption(option, content)
+    local countFunctions = {
+        ["-c"] = countBytes,
+        ["-l"] = countLines,
+        ["-w"] = countWords,
+        ["-m"] = countChars,
+    }
+    return countFunctions[option](content)
+end
+
 if filename then
     local f = assert(io.open(filename, "rb"))
     fileContent = f:read("*a")
@@ -45,20 +55,10 @@ else
 end
 
 
-if option == "-c" or option == "-l" or option == "-w" or option == "-m" then
-    local count = 0
-    if option == "-c" then
-        count = countBytes(fileContent)
-    elseif option == "-l" then
-        count = countLines(fileContent)
-    elseif option == "-w" then
-        count = countWords(fileContent)
-    elseif option == "-m" then
-        count = countChars(fileContent)
-    end
+if option and countOption(option, fileContent) then
+    local count = countOption(option, fileContent)
     print(count .. " " .. filename)
-else    
-    local count = 0
+else
     local lines = countLines(fileContent)
     local words = countWords(fileContent)
     local bytes = countBytes(fileContent)
