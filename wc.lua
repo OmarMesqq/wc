@@ -21,40 +21,13 @@ local function countWords(fileContent)
     return count
 end
 
-local function utf8charbytes(s, i)
-    -- Lua counts bytes instead of chars by default
-    -- Returns the number of bytes used by the UTF-8 character at byte i in s
-    -- Also based on valid UTF-8 encoding
-    local c = string.byte(s, i)
-
-    if c > 0 and c <= 127 then
-        -- UTF8-1
-        return 1
-    elseif c >= 194 and c <= 223 then
-        -- UTF8-2
-        return 2
-    elseif c >= 224 and c <= 239 then
-        -- UTF8-3
-        return 3
-    elseif c >= 240 and c <= 244 then
-        -- UTF8-4
-        return 4
-    end
-end
-
 -- Simulates wc -m flag (counts characters)
 local function countChars(s)
-    local pos = 1
-    local length = 0
-    local strlen = string.len(s)
-
-    while pos <= strlen do
-        local bytes = utf8charbytes(s, pos)
-        pos = pos + bytes
-        length = length + 1
+    local count = 0
+    for _, _ in utf8.codes(s) do
+        count = count + 1
     end
-
-    return length
+    return count
 end
 
 
