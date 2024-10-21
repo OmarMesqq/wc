@@ -1,18 +1,12 @@
-### An implementation of `wc` 
+### This is my solution to John Crickett's [build your own wc coding challenge](https://codingchallenges.fyi/challenges/challenge-wc/).
 
-This is my approach designing a Lua implementation of 
-the `wc` command from Unix-like OSs. 
-
-To use it: 
-
+#### You can run a test suite that compares the system's default `wc` output with my implementation with:
 ```bash 
-lua main.lua -flag <filename>
-```
-
-You can test the output of this implementation 
-with the original `wc` by running the following script:
-
-```bash 
-./verify.sh
+./run_tests.sh
 ``` 
 
+#### To use the program, do: 
+
+```bash 
+lua wc.lua -flag <filename>
+```
