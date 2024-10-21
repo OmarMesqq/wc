@@ -93,5 +93,5 @@ else
     local lines = countLines(fileContent)
     local words = countWords(fileContent)
     local bytes = countBytes(fileContent)
-    print(lines, words, bytes, filename)
+    print(string.format("%7d %7d %7d", lines, words, bytes))
 end
