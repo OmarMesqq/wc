@@ -1,25 +1,25 @@
 -- Simulates wc -c flag (counts bytes)
-local function countBytes(content)
+local function countBytes(fileContent)
     local count = 0
-    for _ in string.gmatch(content, ".") do
+    for _ in string.gmatch(fileContent, ".") do
         count = count + 1
     end
     return count
 end
 
 -- Simulates wc -l flag (counts lines)
-local function countLines(content)
+local function countLines(fileContent)
     local count = 0
-    for _ in string.gmatch(content, "[^\n]*\n?") do
+    for _ in string.gmatch(fileContent, "[^\n]*\n?") do
         count = count + 1
     end
     return count
 end
 
 -- Simulates wc -w flag (counts words)
-local function countWords(content)
+local function countWords(fileContent)
     local count = 0
-    for _ in string.gmatch(content, "%S+") do
+    for _ in string.gmatch(fileContent, "%S+") do
         count = count + 1
     end
     return count
@@ -63,39 +63,35 @@ end
 
 
 -- Main loop
-local i = 0
-local option
-local filename
-for j = 1, #arg do
-    i = i + 1
-end
-if i >= 2 then
-    option = arg[1]
-    filename = arg[2]
+local option = arg[1]
+local filename = arg[2]
+local fileContent = ""
+
+if filename then
+    local f = assert(io.open(filename, "rb"))
+    fileContent = f:read("*a")
+    f:close()
 else
-    filename = arg[1]
+    fileContent = io.stdin:read("*a")
 end
 
-local f = assert(io.open(filename, "rb"))
-local content = f:read("*a")
 
 if option == "-c" or option == "-l" or option == "-w" or option == "-m" then
-    f:close()
     local count = 0
     if option == "-c" then
-        count = countBytes(content)
+        count = countBytes(fileContent)
     elseif option == "-l" then
-        count = countLines(content)
+        count = countLines(fileContent)
     elseif option == "-w" then
-        count = countWords(content)
+        count = countWords(fileContent)
     elseif option == "-m" then
-        count = countChars(content)
+        count = countChars(fileContent)
     end
     print(count .. " " .. filename)
 else    
     local count = 0
-    local lines = countLines(content)
-    local words = countWords(content)
-    local bytes = countBytes(content)
+    local lines = countLines(fileContent)
+    local words = countWords(fileContent)
+    local bytes = countBytes(fileContent)
     print(lines, words, bytes, filename)
 end
